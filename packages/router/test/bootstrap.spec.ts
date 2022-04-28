@@ -6,7 +6,7 @@
  * found in the LICENSE file at https://angular.io/license
  */
 
-import {APP_BASE_HREF, DOCUMENT, ɵgetDOM as getDOM} from '@angular/common';
+import {APP_BASE_HREF, DOCUMENT, Location, ɵgetDOM as getDOM} from '@angular/common';
 import {ApplicationRef, Component, CUSTOM_ELEMENTS_SCHEMA, destroyPlatform, NgModule} from '@angular/core';
 import {inject} from '@angular/core/testing';
 import {BrowserModule} from '@angular/platform-browser';
@@ -24,7 +24,12 @@ import {NavigationEnd, Resolve, Router, RouterModule} from '@angular/router';
 declare var window: Window;
 
 describe('bootstrap', () => {
-  if (isNode) return;
+  if (isNode) {
+    // Jasmine will throw if there are no tests.
+    it('should pass', () => {});
+    return;
+  }
+
   let log: any[] = [];
   let testProviders: any[] = null!;
 
@@ -264,7 +269,6 @@ describe('bootstrap', () => {
        @NgModule({
          imports: [BrowserModule, RouterModule.forRoot([], {useHash: true})],
          declarations: [SecondRootCmp, RootCmp],
-         entryComponents: [SecondRootCmp],
          bootstrap: [RootCmp],
          providers: testProviders,
          schemas: [CUSTOM_ELEMENTS_SCHEMA]
@@ -290,7 +294,6 @@ describe('bootstrap', () => {
        @NgModule({
          imports: [BrowserModule, RouterModule.forRoot([], {useHash: true})],
          declarations: [SecondRootCmp, RootCmp],
-         entryComponents: [SecondRootCmp],
          bootstrap: [RootCmp],
          providers: testProviders,
          schemas: [CUSTOM_ELEMENTS_SCHEMA]

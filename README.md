@@ -53,6 +53,7 @@ Get started with Angular, learn the fundamentals and explore advanced topics on 
 - [Server Side Rendering][ssr]
 - [Schematics][schematics]
 - [Lazy Loading][lazyloading]
+- [Animations][animations]
 
 ## Development Setup
 
@@ -156,4 +157,5 @@ Join the conversation and help the community.
 [gitter]: https://gitter.im/angular/angular
 [stackoverflow]: https://stackoverflow.com/questions/tagged/angular
 [youtube]: https://youtube.com/angular
-[meetup]: https://www.meetup.com/find/?keywords=angular"
+[meetup]: https://www.meetup.com/find/?keywords=angular
+[animations]: https://angular.io/guide/animations

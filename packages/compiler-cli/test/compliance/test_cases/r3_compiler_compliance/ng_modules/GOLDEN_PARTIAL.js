@@ -1,5 +1,5 @@
 /****************************************************************************************************
- * PARTIAL FILE: basic.js
+ * PARTIAL FILE: basic_linked.js
  ****************************************************************************************************/
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import * as i0 from "@angular/core";
@@ -14,7 +14,32 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "0.0.0-PLACEHOLDE
         }] });
 
 /****************************************************************************************************
- * PARTIAL FILE: basic.d.ts
+ * PARTIAL FILE: basic_linked.d.ts
+ ****************************************************************************************************/
+import * as i0 from "@angular/core";
+export declare class BasicModule {
+    static ɵfac: i0.ɵɵFactoryDeclaration<BasicModule, never>;
+    static ɵmod: i0.ɵɵNgModuleDeclaration<BasicModule, never, never, never>;
+    static ɵinj: i0.ɵɵInjectorDeclaration<BasicModule>;
+}
+
+/****************************************************************************************************
+ * PARTIAL FILE: basic_full.js
+ ****************************************************************************************************/
+import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
+import * as i0 from "@angular/core";
+export class BasicModule {
+}
+BasicModule.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "0.0.0-PLACEHOLDER", ngImport: i0, type: BasicModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule });
+BasicModule.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "12.0.0", version: "0.0.0-PLACEHOLDER", ngImport: i0, type: BasicModule, id: 'BasicModuleId' });
+BasicModule.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "0.0.0-PLACEHOLDER", ngImport: i0, type: BasicModule });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "0.0.0-PLACEHOLDER", ngImport: i0, type: BasicModule, decorators: [{
+            type: NgModule,
+            args: [{ id: 'BasicModuleId', schemas: [NO_ERRORS_SCHEMA] }]
+        }] });
+
+/****************************************************************************************************
+ * PARTIAL FILE: basic_full.d.ts
  ****************************************************************************************************/
 import * as i0 from "@angular/core";
 export declare class BasicModule {
@@ -74,16 +99,16 @@ import * as i0 from "@angular/core";
 export declare class FooComponent {
     name: string;
     static ɵfac: i0.ɵɵFactoryDeclaration<FooComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<FooComponent, "foo", never, {}, {}, never, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<FooComponent, "foo", never, {}, {}, never, never, false>;
 }
 export declare class BarDirective {
     static ɵfac: i0.ɵɵFactoryDeclaration<BarDirective, never>;
-    static ɵdir: i0.ɵɵDirectiveDeclaration<BarDirective, "[bar]", never, {}, {}, never>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<BarDirective, "[bar]", never, {}, {}, never, never, false>;
 }
 export declare class QuxPipe implements PipeTransform {
     transform(): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<QuxPipe, never>;
-    static ɵpipe: i0.ɵɵPipeDeclaration<QuxPipe, "qux">;
+    static ɵpipe: i0.ɵɵPipeDeclaration<QuxPipe, "qux", false>;
 }
 export declare class FooModule {
     static ɵfac: i0.ɵɵFactoryDeclaration<FooModule, never>;
@@ -142,16 +167,16 @@ import * as i0 from "@angular/core";
 export declare class FooComponent {
     name: string;
     static ɵfac: i0.ɵɵFactoryDeclaration<FooComponent, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<FooComponent, "foo", never, {}, {}, never, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<FooComponent, "foo", never, {}, {}, never, never, false>;
 }
 export declare class BarDirective {
     static ɵfac: i0.ɵɵFactoryDeclaration<BarDirective, never>;
-    static ɵdir: i0.ɵɵDirectiveDeclaration<BarDirective, "[bar]", never, {}, {}, never>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<BarDirective, "[bar]", never, {}, {}, never, never, false>;
 }
 export declare class QuxPipe implements PipeTransform {
     transform(): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<QuxPipe, never>;
-    static ɵpipe: i0.ɵɵPipeDeclaration<QuxPipe, "qux">;
+    static ɵpipe: i0.ɵɵPipeDeclaration<QuxPipe, "qux", false>;
 }
 export declare class FooModule {
     static ɵfac: i0.ɵɵFactoryDeclaration<FooModule, never>;
@@ -295,7 +320,7 @@ export class AppModule {
 }
 AppModule.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "0.0.0-PLACEHOLDER", ngImport: i0, type: AppModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule });
 AppModule.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "12.0.0", version: "0.0.0-PLACEHOLDER", ngImport: i0, type: AppModule, imports: [BModule] });
-AppModule.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "0.0.0-PLACEHOLDER", ngImport: i0, type: AppModule, imports: [[BModule]] });
+AppModule.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "0.0.0-PLACEHOLDER", ngImport: i0, type: AppModule, imports: [BModule] });
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "0.0.0-PLACEHOLDER", ngImport: i0, type: AppModule, decorators: [{
             type: NgModule,
             args: [{ imports: [BModule] }]
@@ -307,11 +332,11 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "0.0.0-PLACEHOLDE
 import * as i0 from "@angular/core";
 export declare class A1Component {
     static ɵfac: i0.ɵɵFactoryDeclaration<A1Component, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<A1Component, "a1", never, {}, {}, never, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<A1Component, "a1", never, {}, {}, never, never, false>;
 }
 export declare class A2Component {
     static ɵfac: i0.ɵɵFactoryDeclaration<A2Component, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<A2Component, "a2", never, {}, {}, never, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<A2Component, "a2", never, {}, {}, never, never, false>;
 }
 export declare class AModule {
     static ɵfac: i0.ɵɵFactoryDeclaration<AModule, never>;
@@ -320,11 +345,11 @@ export declare class AModule {
 }
 export declare class B1Component {
     static ɵfac: i0.ɵɵFactoryDeclaration<B1Component, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<B1Component, "b1", never, {}, {}, never, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<B1Component, "b1", never, {}, {}, never, never, false>;
 }
 export declare class B2Component {
     static ɵfac: i0.ɵɵFactoryDeclaration<B2Component, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<B2Component, "b2", never, {}, {}, never, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<B2Component, "b2", never, {}, {}, never, never, false>;
 }
 export declare class BModule {
     static ɵfac: i0.ɵɵFactoryDeclaration<BModule, never>;
@@ -396,7 +421,7 @@ export class AppModule {
 }
 AppModule.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "0.0.0-PLACEHOLDER", ngImport: i0, type: AppModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule });
 AppModule.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "12.0.0", version: "0.0.0-PLACEHOLDER", ngImport: i0, type: AppModule, imports: [BModule] });
-AppModule.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "0.0.0-PLACEHOLDER", ngImport: i0, type: AppModule, imports: [[BModule]] });
+AppModule.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "0.0.0-PLACEHOLDER", ngImport: i0, type: AppModule, imports: [BModule] });
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "0.0.0-PLACEHOLDER", ngImport: i0, type: AppModule, decorators: [{
             type: NgModule,
             args: [{ imports: [BModule] }]
@@ -408,11 +433,11 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "0.0.0-PLACEHOLDE
 import * as i0 from "@angular/core";
 export declare class A1Component {
     static ɵfac: i0.ɵɵFactoryDeclaration<A1Component, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<A1Component, "a1", never, {}, {}, never, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<A1Component, "a1", never, {}, {}, never, never, false>;
 }
 export declare class A2Component {
     static ɵfac: i0.ɵɵFactoryDeclaration<A2Component, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<A2Component, "a2", never, {}, {}, never, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<A2Component, "a2", never, {}, {}, never, never, false>;
 }
 export declare class AModule {
     static ɵfac: i0.ɵɵFactoryDeclaration<AModule, never>;
@@ -421,11 +446,11 @@ export declare class AModule {
 }
 export declare class B1Component {
     static ɵfac: i0.ɵɵFactoryDeclaration<B1Component, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<B1Component, "b1", never, {}, {}, never, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<B1Component, "b1", never, {}, {}, never, never, false>;
 }
 export declare class B2Component {
     static ɵfac: i0.ɵɵFactoryDeclaration<B2Component, never>;
-    static ɵcmp: i0.ɵɵComponentDeclaration<B2Component, "b2", never, {}, {}, never, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<B2Component, "b2", never, {}, {}, never, never, false>;
 }
 export declare class BModule {
     static ɵfac: i0.ɵɵFactoryDeclaration<BModule, never>;
@@ -528,7 +553,7 @@ export class TestModule {
 }
 TestModule.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "0.0.0-PLACEHOLDER", ngImport: i0, type: TestModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule });
 TestModule.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "12.0.0", version: "0.0.0-PLACEHOLDER", ngImport: i0, type: TestModule, imports: function () { return [ForwardModule]; } });
-TestModule.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "0.0.0-PLACEHOLDER", ngImport: i0, type: TestModule, imports: [[provideModule()]] });
+TestModule.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "0.0.0-PLACEHOLDER", ngImport: i0, type: TestModule, imports: [provideModule()] });
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "0.0.0-PLACEHOLDER", ngImport: i0, type: TestModule, decorators: [{
             type: NgModule,
             args: [{ imports: [provideModule()] }]

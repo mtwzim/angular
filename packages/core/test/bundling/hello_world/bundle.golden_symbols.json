@@ -39,22 +39,10 @@
     "name": "RuntimeError"
   },
   {
-    "name": "SimpleChange"
+    "name": "TRACKED_LVIEWS"
   },
   {
     "name": "ViewEncapsulation"
-  },
-  {
-    "name": "__global"
-  },
-  {
-    "name": "__globalThis"
-  },
-  {
-    "name": "__self"
-  },
-  {
-    "name": "__window"
   },
   {
     "name": "_global"
@@ -70,6 +58,9 @@
   },
   {
     "name": "allocLFrame"
+  },
+  {
+    "name": "appendChild"
   },
   {
     "name": "attachPatchData"
@@ -117,9 +108,6 @@
     "name": "extractDirectiveDef"
   },
   {
-    "name": "extractPipeDef"
-  },
-  {
     "name": "getClosureSafeProperty"
   },
   {
@@ -150,10 +138,19 @@
     "name": "getNextLContainer"
   },
   {
+    "name": "getNodeInjectable"
+  },
+  {
     "name": "getOrCreateTNode"
   },
   {
+    "name": "getPipeDef"
+  },
+  {
     "name": "getSimpleChangesStore"
+  },
+  {
+    "name": "getTNodeFromLView"
   },
   {
     "name": "includeViewProviders"
@@ -165,9 +162,6 @@
     "name": "insertBloom"
   },
   {
-    "name": "instantiateRootComponent"
-  },
-  {
     "name": "instructionState"
   },
   {
@@ -177,7 +171,13 @@
     "name": "isInCheckNoChangesMode"
   },
   {
+    "name": "isLView"
+  },
+  {
     "name": "isProceduralRenderer"
+  },
+  {
+    "name": "isTemplateNode"
   },
   {
     "name": "leaveDI"
@@ -196,6 +196,9 @@
   },
   {
     "name": "ngOnChangesSetInput"
+  },
+  {
+    "name": "nonNull"
   },
   {
     "name": "refreshComponent"
@@ -243,6 +246,9 @@
     "name": "setSelectedIndex"
   },
   {
+    "name": "uniqueIdCounter"
+  },
+  {
     "name": "updateTransplantedViewCount"
   },
   {
@@ -250,8 +256,5 @@
   },
   {
     "name": "ɵɵdefineComponent"
-  },
-  {
-    "name": "ɵɵtext"
   }
 ]

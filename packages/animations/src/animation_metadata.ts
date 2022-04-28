@@ -7,11 +7,16 @@
  */
 
 /**
- * Represents a set of CSS styles for use in an animation style.
+ * Represents a set of CSS styles for use in an animation style as a generic.
  */
 export interface ɵStyleData {
   [key: string]: string|number;
 }
+
+/**
+ * Represents a set of CSS styles for use in an animation style as a Map.
+ */
+export type ɵStyleDataMap = Map<string, string|number>;
 
 /**
  * Represents animation-step timing parameters for an animation step.
@@ -98,7 +103,7 @@ export declare interface AnimateChildOptions extends AnimationOptions {
 export const enum AnimationMetadataType {
   /**
    * Associates a named animation state with a set of CSS styles.
-   * See `state()`
+   * See [`state()`](api/animations/state)
    */
   State = 0,
   /**
@@ -204,7 +209,7 @@ export interface AnimationTriggerMetadata extends AnimationMetadata {
 
 /**
  * Encapsulates an animation state by associating a state name with a set of CSS styles.
- * Instantiated and returned by the `state()` function.
+ * Instantiated and returned by the [`state()`](api/animations/state) function.
  *
  * @publicApi
  */
@@ -450,13 +455,13 @@ export interface AnimationStaggerMetadata extends AnimationMetadata {
 }
 
 /**
- * Creates a named animation trigger, containing a  list of `state()`
+ * Creates a named animation trigger, containing a  list of [`state()`](api/animations/state)
  * and `transition()` entries to be evaluated when the expression
  * bound to the trigger changes.
  *
  * @param name An identifying string.
- * @param definitions  An animation definition object, containing an array of `state()`
- * and `transition()` declarations.
+ * @param definitions  An animation definition object, containing an array of
+ * [`state()`](api/animations/state) and `transition()` declarations.
  *
  * @return An object that encapsulates the trigger data.
  *
@@ -744,8 +749,8 @@ export function sequence(
 
 /**
  * Declares a key/value object containing CSS properties/styles that
- * can then be used for an animation `state`, within an animation `sequence`,
- * or as styling data for calls to `animate()` and `keyframes()`.
+ * can then be used for an animation [`state`](api/animations/state), within an animation
+ *`sequence`, or as styling data for calls to `animate()` and `keyframes()`.
  *
  * @param tokens A set of CSS styles or HTML styles associated with an animation state.
  * The value can be any of the following:
@@ -1173,7 +1178,7 @@ export function useAnimation(
  * (if their insertion/removal is simply a consequence of that of their parent they
  * should be queried via a different token in their parent's `:enter`/`:leave` transitions).
  *
- * The only elements Angular assumes can enter/leave on their own logic (thus the only
+ * The only elements Angular assumes can enter/leave based on their own logic (thus the only
  * ones that can be queried via the `:enter` and `:leave` tokens) are:
  *  - Those inserted dynamically (via `ViewContainerRef`)
  *  - Those that have a structural directive (which, under the hood, are a subset of the above ones)
@@ -1183,6 +1188,14 @@ export function useAnimation(
  *  Note that elements will be successfully queried via `:enter`/`:leave` even if their
  *  insertion/removal is not done manually via `ViewContainerRef`or caused by their structural
  *  directive (e.g. they enter/exit alongside their parent).
+ *
+ * </div>
+ *
+ * <div class="alert is-important">
+ *
+ *  There is an exception to what previously mentioned, besides elements entering/leaving based on
+ *  their own logic, elements with an animation trigger can always be queried via `:leave` when
+ * their parent is also leaving.
  *
  * </div>
  *

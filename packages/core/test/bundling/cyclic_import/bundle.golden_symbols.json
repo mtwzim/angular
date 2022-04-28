@@ -6,9 +6,6 @@
     "name": "ChangeDetectionStrategy"
   },
   {
-    "name": "DepComponent"
-  },
-  {
     "name": "EMPTY_ARRAY"
   },
   {
@@ -16,9 +13,6 @@
   },
   {
     "name": "InjectFlags"
-  },
-  {
-    "name": "Module"
   },
   {
     "name": "NG_COMP_DEF"
@@ -45,25 +39,13 @@
     "name": "RuntimeError"
   },
   {
-    "name": "SimpleChange"
+    "name": "TRACKED_LVIEWS"
   },
   {
     "name": "TriggerComponent"
   },
   {
     "name": "ViewEncapsulation"
-  },
-  {
-    "name": "__global"
-  },
-  {
-    "name": "__globalThis"
-  },
-  {
-    "name": "__self"
-  },
-  {
-    "name": "__window"
   },
   {
     "name": "_global"
@@ -91,9 +73,6 @@
   },
   {
     "name": "attachPatchData"
-  },
-  {
-    "name": "autoRegisterModuleById"
   },
   {
     "name": "callHook"
@@ -150,9 +129,6 @@
     "name": "extractDirectiveDef"
   },
   {
-    "name": "extractPipeDef"
-  },
-  {
     "name": "findAttrIndexInNode"
   },
   {
@@ -160,6 +136,9 @@
   },
   {
     "name": "generatePropertyAliases"
+  },
+  {
+    "name": "getBindingsEnabled"
   },
   {
     "name": "getClosureSafeProperty"
@@ -210,7 +189,13 @@
     "name": "getOrCreateTNode"
   },
   {
+    "name": "getPipeDef"
+  },
+  {
     "name": "getSimpleChangesStore"
+  },
+  {
+    "name": "getTNodeFromLView"
   },
   {
     "name": "getTView"
@@ -258,6 +243,9 @@
     "name": "isInlineTemplate"
   },
   {
+    "name": "isLView"
+  },
+  {
     "name": "isNodeMatchingSelector"
   },
   {
@@ -268,6 +256,9 @@
   },
   {
     "name": "isProceduralRenderer"
+  },
+  {
+    "name": "isTemplateNode"
   },
   {
     "name": "leaveDI"
@@ -297,7 +288,7 @@
     "name": "ngOnChangesSetInput"
   },
   {
-    "name": "noSideEffects"
+    "name": "nonNull"
   },
   {
     "name": "refreshComponent"
@@ -360,6 +351,9 @@
     "name": "setUpAttributes"
   },
   {
+    "name": "uniqueIdCounter"
+  },
+  {
     "name": "updateTransplantedViewCount"
   },
   {
@@ -375,10 +369,10 @@
     "name": "ɵɵdefineComponent"
   },
   {
-    "name": "ɵɵdefineInjector"
+    "name": "ɵɵelement"
   },
   {
-    "name": "ɵɵdefineNgModule"
+    "name": "ɵɵelementEnd"
   },
   {
     "name": "ɵɵelementStart"

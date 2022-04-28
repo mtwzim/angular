@@ -8,8 +8,8 @@ class Hero {
   // Hero from string formatted as '<id> <name>'.
   static fromString(s: string): Hero {
     return new Hero(
-      +s.substr(0, s.indexOf(' ')),
-      s.substr(s.indexOf(' ') + 1),
+      +s.substring(0, s.indexOf(' ')),
+      s.slice(s.indexOf(' ') + 1),
     );
   }
 
@@ -27,8 +27,8 @@ class Hero {
     // Get name from the h2
     const name = await detail.element(by.css('h2')).getText();
     return {
-      id: +id.substr(id.indexOf(' ') + 1),
-      name: name.substr(0, name.lastIndexOf(' '))
+      id: +id.slice(id.indexOf(' ') + 1),
+      name: name.substring(0, name.lastIndexOf(' '))
     };
   }
 }
@@ -176,8 +176,9 @@ describe('Universal', () => {
         expect(await button.getCssValue('padding')).toBe('5px 10px');
         expect(await button.getCssValue('border-radius')).toBe('4px');
         // Styles defined in heroes.component.css
-        expect(await button.getCssValue('left')).toBe('194px');
-        expect(await button.getCssValue('top')).toBe('-32px');
+        expect(await button.getCssValue('right')).toBe('0px');
+        expect(await button.getCssValue('top')).toBe('0px');
+        expect(await button.getCssValue('bottom')).toBe('0px');
       }
 
       const addButton = element(by.buttonText('add'));

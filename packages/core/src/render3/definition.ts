@@ -17,7 +17,7 @@ import {initNgDevMode} from '../util/ng_dev_mode';
 import {stringify} from '../util/stringify';
 
 import {NG_COMP_DEF, NG_DIR_DEF, NG_MOD_DEF, NG_PIPE_DEF} from './fields';
-import {ComponentDef, ComponentDefFeature, ComponentTemplate, ComponentType, ContentQueriesFunction, DirectiveDef, DirectiveDefFeature, DirectiveTypesOrFactory, HostBindingsFunction, PipeDef, PipeTypesOrFactory, ViewQueriesFunction} from './interfaces/definition';
+import {ComponentDef, ComponentDefFeature, ComponentTemplate, ComponentType, ContentQueriesFunction, DependencyTypeList, DirectiveDef, DirectiveDefFeature, DirectiveDefList, DirectiveTypesOrFactory, HostBindingsFunction, PipeDef, PipeDefList, PipeTypesOrFactory, TypeOrFactory, ViewQueriesFunction} from './interfaces/definition';
 import {TAttributes, TConstantsOrFactory} from './interfaces/node';
 import {CssSelectorList} from './interfaces/projection';
 
@@ -265,25 +265,22 @@ export function ɵɵdefineComponent<T>(componentDefinition: {
   changeDetection?: ChangeDetectionStrategy;
 
   /**
-   * Registry of directives and components that may be found in this component's view.
+   * Registry of directives, components, and pipes that may be found in this component's view.
    *
-   * The property is either an array of `DirectiveDef`s or a function which returns the array of
-   * `DirectiveDef`s. The function is necessary to be able to support forward declarations.
+   * This property is either an array of types or a function that returns the array of types. This
+   * function may be necessary to support forward declarations.
    */
-  directives?: DirectiveTypesOrFactory | null;
-
-  /**
-   * Registry of pipes that may be found in this component's view.
-   *
-   * The property is either an array of `PipeDefs`s or a function which returns the array of
-   * `PipeDefs`s. The function is necessary to be able to support forward declarations.
-   */
-  pipes?: PipeTypesOrFactory | null;
+  dependencies?: TypeOrFactory<DependencyTypeList>;
 
   /**
    * The set of schemas that declare elements to be allowed in the component's template.
    */
   schemas?: SchemaMetadata[] | null;
+
+  /**
+   * Whether this directive/component is standalone.
+   */
+  standalone?: boolean;
 }): unknown {
   return noSideEffects(() => {
     // Initialize ngDevMode. This must be the first statement in ɵɵdefineComponent.
@@ -312,6 +309,10 @@ export function ɵɵdefineComponent<T>(componentDefinition: {
       onPush: componentDefinition.changeDetection === ChangeDetectionStrategy.OnPush,
       directiveDefs: null!,  // assigned in noSideEffects
       pipeDefs: null!,       // assigned in noSideEffects
+      standalone: componentDefinition.standalone === true,
+      dependencies:
+          componentDefinition.standalone === true && componentDefinition.dependencies || null,
+      getStandaloneInjector: null,
       selectors: componentDefinition.selectors || EMPTY_ARRAY,
       viewQuery: componentDefinition.viewQuery || null,
       features: componentDefinition.features as DirectiveDefFeature[] || null,
@@ -324,19 +325,21 @@ export function ɵɵdefineComponent<T>(componentDefinition: {
       schemas: componentDefinition.schemas || null,
       tView: null,
     };
-    const directiveTypes = componentDefinition.directives!;
+    const dependencies = componentDefinition.dependencies;
     const feature = componentDefinition.features;
-    const pipeTypes = componentDefinition.pipes!;
     def.id += _renderCompCount++;
     def.inputs = invertObject(componentDefinition.inputs, declaredInputs),
     def.outputs = invertObject(componentDefinition.outputs),
     feature && feature.forEach((fn) => fn(def));
-    def.directiveDefs = directiveTypes ?
-        () => (typeof directiveTypes === 'function' ? directiveTypes() : directiveTypes)
-                  .map(extractDirectiveDef) :
+    def.directiveDefs = dependencies ?
+        (() => (typeof dependencies === 'function' ? dependencies() : dependencies)
+                   .map(extractDirectiveDef)
+                   .filter(nonNull)) :
         null;
-    def.pipeDefs = pipeTypes ?
-        () => (typeof pipeTypes === 'function' ? pipeTypes() : pipeTypes).map(extractPipeDef) :
+    def.pipeDefs = dependencies ?
+        (() => (typeof dependencies === 'function' ? dependencies() : dependencies)
+                   .map(getPipeDef)
+                   .filter(nonNull)) :
         null;
 
     return def;
@@ -355,24 +358,16 @@ export function ɵɵdefineComponent<T>(componentDefinition: {
 export function ɵɵsetComponentScope(
     type: ComponentType<any>, directives: Type<any>[], pipes: Type<any>[]): void {
   const def = (type.ɵcmp as ComponentDef<any>);
-  def.directiveDefs = () => directives.map(extractDirectiveDef);
-  def.pipeDefs = () => pipes.map(extractPipeDef);
+  def.directiveDefs = () => directives.map(extractDirectiveDef) as DirectiveDefList;
+  def.pipeDefs = () => pipes.map(getPipeDef) as PipeDefList;
 }
 
-export function extractDirectiveDef(type: Type<any>): DirectiveDef<any>|ComponentDef<any> {
-  const def = getComponentDef(type) || getDirectiveDef(type);
-  if (ngDevMode && !def) {
-    throw new Error(`'${type.name}' is neither 'ComponentType' or 'DirectiveType'.`);
-  }
-  return def!;
+export function extractDirectiveDef(type: Type<any>): DirectiveDef<any>|ComponentDef<any>|null {
+  return getComponentDef(type) || getDirectiveDef(type);
 }
 
-export function extractPipeDef(type: Type<any>): PipeDef<any> {
-  const def = getPipeDef(type);
-  if (ngDevMode && !def) {
-    throw new Error(`'${type.name}' is not a 'PipeType'.`);
-  }
-  return def!;
+function nonNull<T>(value: T|null): value is T {
+  return value !== null;
 }
 
 export const autoRegisterModuleById: {[id: string]: NgModuleType} = {};
@@ -709,13 +704,19 @@ export function ɵɵdefinePipe<T>(pipeDef: {
   type: Type<T>,
 
   /** Whether the pipe is pure. */
-  pure?: boolean
+  pure?: boolean,
+
+  /**
+   * Whether the pipe is standalone.
+   */
+  standalone?: boolean,
 }): unknown {
   return (<PipeDef<T>>{
     type: pipeDef.type,
     name: pipeDef.name,
     factory: null,
     pure: pipeDef.pure !== false,
+    standalone: pipeDef.standalone === true,
     onDestroy: pipeDef.type.prototype.ngOnDestroy || null
   });
 }

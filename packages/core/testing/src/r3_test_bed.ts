@@ -27,6 +27,7 @@ import {
   ɵRender3ComponentFactory as ComponentFactory,
   ɵRender3NgModuleRef as NgModuleRef,
   ɵresetCompiledComponents as resetCompiledComponents,
+  ɵsetAllowDuplicateNgModuleIdsForTest as setAllowDuplicateNgModuleIdsForTest,
   ɵstringify as stringify,
 } from '@angular/core';
 
@@ -79,9 +80,9 @@ export class TestBedRender3 implements TestBed {
    */
   static initTestEnvironment(
       ngModule: Type<any>|Type<any>[], platform: PlatformRef,
-      summariesOrOptions?: TestEnvironmentOptions|(() => any[])): TestBed {
+      options?: TestEnvironmentOptions): TestBed {
     const testBed = _getTestBedRender3();
-    testBed.initTestEnvironment(ngModule, platform, summariesOrOptions);
+    testBed.initTestEnvironment(ngModule, platform, options);
     return testBed;
   }
 
@@ -229,19 +230,22 @@ export class TestBedRender3 implements TestBed {
    */
   initTestEnvironment(
       ngModule: Type<any>|Type<any>[], platform: PlatformRef,
-      summariesOrOptions?: TestEnvironmentOptions|(() => any[])): void {
+      options?: TestEnvironmentOptions): void {
     if (this.platform || this.ngModule) {
       throw new Error('Cannot set base providers because it has already been called');
     }
 
-    // If `summariesOrOptions` is a function, it means that it's
-    // an AOT summaries factory which Ivy doesn't support.
-    TestBedRender3._environmentTeardownOptions =
-        typeof summariesOrOptions === 'function' ? undefined : summariesOrOptions?.teardown;
+    TestBedRender3._environmentTeardownOptions = options?.teardown;
 
     this.platform = platform;
     this.ngModule = ngModule;
     this._compiler = new R3TestBedCompiler(this.platform, this.ngModule);
+
+    // TestBed does not have an API which can reliably detect the start of a test, and thus could be
+    // used to track the state of the NgModule registry and reset it correctly. Instead, when we
+    // know we're in a testing scenario, we disable the check for duplicate NgModule registration
+    // completely.
+    setAllowDuplicateNgModuleIdsForTest(true);
   }
 
   /**
@@ -255,6 +259,7 @@ export class TestBedRender3 implements TestBed {
     this.platform = null!;
     this.ngModule = null!;
     TestBedRender3._environmentTeardownOptions = undefined;
+    setAllowDuplicateNgModuleIdsForTest(false);
   }
 
   resetTestingModule(): void {
@@ -294,6 +299,13 @@ export class TestBedRender3 implements TestBed {
 
   configureTestingModule(moduleDef: TestModuleMetadata): void {
     this.assertNotInstantiated('R3TestBed.configureTestingModule', 'configure the test module');
+
+    // Trigger module scoping queue flush before executing other TestBed operations in a test.
+    // This is needed for the first test invocation to ensure that globally declared modules have
+    // their components scoped properly. See the `checkGlobalCompilationFinished` function
+    // description for additional info.
+    this.checkGlobalCompilationFinished();
+
     // Always re-assign the teardown options, even if they're undefined.
     // This ensures that we don't carry the options between tests.
     this._instanceTeardownOptions = moduleDef.teardown;
